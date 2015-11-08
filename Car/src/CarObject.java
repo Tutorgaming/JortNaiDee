@@ -9,11 +9,13 @@ public class CarObject {
 	public CarObject(){
 		this.setCarPlate("");
 		this.setBalance(0);
+		this.setCurrentParkingSlot(0);
 	}
 	
 	public CarObject(String carPlate){
 		this.setCarPlate(carPlate);
 		this.setBalance(0);
+		this.setCurrentParkingSlot(0);
 	}
 	
 	public void clearBalance(){
@@ -56,6 +58,8 @@ public class CarObject {
 		this.currentParkingSlot = currentParkingSlot;
 	}
 	
-	
+	public boolean isParking(){
+		return this.getCurrentParkingSlot() != 0;
+	}
 	
 }

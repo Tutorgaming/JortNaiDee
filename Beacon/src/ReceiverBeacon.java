@@ -56,6 +56,7 @@ public class ReceiverBeacon extends Thread {
 					thisBeacon.setOwnBy(tokens[1]);
 					thisBeacon.setMapAt(thisBeacon.getSlotNo(), true);
 					thisBeacon.setParkingStartTime();
+					//UPDATE HERE
 				}
 			break;
 			case "2" : // Bye Command
@@ -72,7 +73,7 @@ public class ReceiverBeacon extends Thread {
 					int usedTime = thisBeacon.getParkingTime();
 					s1.packTime(usedTime);
 					s1.start();
-					
+					//UPDATE HERE
 				}
 			break;
 			case "4" : // Request Map Command
