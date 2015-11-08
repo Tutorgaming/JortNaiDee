@@ -48,7 +48,7 @@ public class ReceiverBeacon extends Thread {
 	
 	void decrypt(String message, InetAddress sender){
 		String[] tokens = message.split(" ");
-		switch(tokens[0]){
+		switch(tokens[0].trim()){
 			case "1" : // Parking Command
 				// Check if Request Slot is match with this beacon
 				if(tokens[2].equals(thisBeacon.getSlotNo()) && !thisBeacon.isHasCarPark()){

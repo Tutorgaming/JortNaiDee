@@ -8,11 +8,12 @@ public class SenderCar extends Thread {
 	private CarObject thisCarObject;
 
 	public SenderCar() throws UnknownHostException {
-		this.clientAddress = InetAddress.getByName("192.168.0.255");
+		this.setBroadcastAddress();
 		this.messageToSend = "";
 	}
 	
-	public SenderCar(CarObject thisCarObject){
+	public SenderCar(CarObject thisCarObject) {
+		this.setBroadcastAddress();
 		this.thisCarObject = thisCarObject;
 	}
 
@@ -42,14 +43,23 @@ public class SenderCar extends Thread {
 	}
 
 	public void sendParkRequest(int slotNo){
-		this.messageToSend = "1 " + thisCarObject.getCarPlate() + slotNo;
+		this.messageToSend = "1 " + thisCarObject.getCarPlate() + " " + slotNo;
 	}
 	
 	public void sendByeRequest(){
-		this.messageToSend = "2 " + thisCarObject.getCarPlate() + thisCarObject.getCurrentParkingSlot();
+		this.messageToSend = "2 " + thisCarObject.getCarPlate() + " " + thisCarObject.getCurrentParkingSlot();
 	}
 	
 	public void sendMapRequest(){
 		this.messageToSend = "5";
+	}
+	
+	public void setBroadcastAddress(){
+		try {
+			this.clientAddress = InetAddress.getByName("192.168.0.255");
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
