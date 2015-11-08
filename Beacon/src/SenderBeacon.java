@@ -50,4 +50,9 @@ public class SenderBeacon extends Thread {
 	public void packTime(int usedTime) {
 		this.messageToSend = "3 " + usedTime;
 	}
+	
+	public void broadcastOccupancy(int mySlotNumber , boolean isOccupied){
+		this.messageToSend = "6 "+ mySlotNumber +" "+((isOccupied)? "1":"0") ;
+		
+	}
 }

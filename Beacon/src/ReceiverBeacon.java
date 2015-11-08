@@ -3,6 +3,7 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
+import java.net.UnknownHostException;
 
 public class ReceiverBeacon extends Thread {
 
@@ -46,13 +47,13 @@ public class ReceiverBeacon extends Thread {
 		}
 	}
 	
-	void decrypt(String message, InetAddress sender){
+	void decrypt(String message, InetAddress sender) throws UnknownHostException{
 		String[] tokens = message.split(" ");
 		for(int i = 0; i < tokens.length; i++){
 			tokens[i] = tokens[i].trim();
 		}
 
-		switch(tokens[0].trim()){
+		switch(tokens[0]){
 			case "1" : // Parking Command
 				// Check if Request Slot is match with this beacon
 				if((Integer.parseInt(tokens[2]) == thisBeacon.getSlotNo()) && !thisBeacon.isHasCarPark()){
@@ -62,6 +63,8 @@ public class ReceiverBeacon extends Thread {
 					thisBeacon.setParkingStartTime();
 					//UPDATE HERE
 					System.out.println("park at slot "+tokens[2]+"Successful");
+					SenderBeacon ss1 = new SenderBeacon();
+					ss1.broadcastOccupancy(thisBeacon.getSlotNo(), false);
 				}
 			break;
 			case "2" : // Bye Command
@@ -80,6 +83,8 @@ public class ReceiverBeacon extends Thread {
 					s1.start();
 					//UPDATE HERE
 					System.out.println("bye at slot "+tokens[2]+"Successful");
+					SenderBeacon ss1 = new SenderBeacon();
+					ss1.broadcastOccupancy(thisBeacon.getSlotNo(), true);
 				}
 			break;
 			case "4" : // Request Map Command
@@ -88,8 +93,19 @@ public class ReceiverBeacon extends Thread {
 				s1.packMap(map);
 				s1.start();
 			break;
-		}
-		
+			
+			case "6" :// Receive Occupancy Update 
+				//TOKENS[1] = SlotNumber 	//TOKENS[2] = 1=occupied 0=not occupied
+				if(!(tokens[1].equals(""+thisBeacon.getSlotNo()))){ // Valid if not its own broadcasting
+					if(tokens[2].equals("1")){ //IF Reported Slot 1 is Occupied
+						thisBeacon.setMapAt(Integer.parseInt(tokens[1]), true);
+					}else{
+						thisBeacon.setMapAt(Integer.parseInt(tokens[1]), false);
+					}
+				}else{
+					System.out.println("received my own update from "+thisBeacon.getSlotNo());
+				}
+			break; 
+		}	
 	}
-
 }
