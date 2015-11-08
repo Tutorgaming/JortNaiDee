@@ -70,7 +70,7 @@ public class BeaconObject {
 	
 	public int getParkingTime(){
 		long msDiff = (new Date()).getTime() - this.parkingStartTime.getTime();
-		return (int)(msDiff / 60000);
+		return (int)(msDiff / 1000);
 	}
 	
 }
