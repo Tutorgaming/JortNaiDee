@@ -50,6 +50,9 @@ public class ReceiverCar extends Thread {
 	
 	void decrypt(String message, InetAddress sender){
 		String[] tokens = message.split(" ");
+		for(int i = 0; i < tokens.length; i++){
+			tokens[i] = tokens[i].trim();
+		}
 		switch(tokens[0].trim()){
 			case "3": //Received Start parking timeStamp From Beacon
 				thisCarObject.addBalance(Integer.parseInt(tokens[1]));

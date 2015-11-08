@@ -32,8 +32,8 @@ public class ReceiverBeacon extends Thread {
 				serverSocket.receive(receivePacket);
 				String sentence = new String(receivePacket.getData());
 				//Receive Text
-				System.out.println("[state : received from : " + receivePacket.getAddress()
-						+ " : " + sentence + "]");
+				//System.out.print("[state : received from : " + receivePacket.getAddress()
+				//		+ " : " + sentence + "] ");
 				//Read Text
 				decrypt(sentence, receivePacket.getAddress());
 			}
@@ -48,20 +48,29 @@ public class ReceiverBeacon extends Thread {
 	
 	void decrypt(String message, InetAddress sender){
 		String[] tokens = message.split(" ");
+		for(int i = 0; i < tokens.length; i++){
+			tokens[i] = tokens[i].trim();
+		}
+		System.out.print(tokens[1]+" is request to ");
+
 		switch(tokens[0].trim()){
 			case "1" : // Parking Command
 				// Check if Request Slot is match with this beacon
-				if(tokens[2].equals(thisBeacon.getSlotNo()) && !thisBeacon.isHasCarPark()){
+				System.out.println("edok "+tokens[2]);
+				System.out.println(tokens[2].equals("1"));
+				if((Integer.parseInt(tokens[2]) == thisBeacon.getSlotNo()) && !thisBeacon.isHasCarPark()){
 					thisBeacon.setHasCarPark(true);
 					thisBeacon.setOwnBy(tokens[1]);
 					thisBeacon.setMapAt(thisBeacon.getSlotNo(), true);
 					thisBeacon.setParkingStartTime();
 					//UPDATE HERE
+					System.out.println("park at slot "+tokens[2]+"Successful");
 				}
 			break;
 			case "2" : // Bye Command
 				// Check if Request Slot is match with this beacon
-				if(tokens[2].equals(thisBeacon.getSlotNo())){
+				System.out.println("bye at slot "+tokens[2]);
+				if(tokens[2].equals(""+thisBeacon.getSlotNo())){
 					
 					// remove a car from this slot
 					thisBeacon.setHasCarPark(false);
@@ -74,6 +83,7 @@ public class ReceiverBeacon extends Thread {
 					s1.packTime(usedTime);
 					s1.start();
 					//UPDATE HERE
+					System.out.println("bye at slot "+tokens[2]+"Successful");
 				}
 			break;
 			case "4" : // Request Map Command
