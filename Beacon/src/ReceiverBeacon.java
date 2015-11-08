@@ -32,8 +32,8 @@ public class ReceiverBeacon extends Thread {
 				serverSocket.receive(receivePacket);
 				String sentence = new String(receivePacket.getData());
 				//Receive Text
-				//System.out.print("[state : received from : " + receivePacket.getAddress()
-				//		+ " : " + sentence + "] ");
+				System.out.print("[state : received from : " + receivePacket.getAddress()
+						+ " : " + sentence + "] ");
 				//Read Text
 				decrypt(sentence, receivePacket.getAddress());
 			}
@@ -51,13 +51,10 @@ public class ReceiverBeacon extends Thread {
 		for(int i = 0; i < tokens.length; i++){
 			tokens[i] = tokens[i].trim();
 		}
-		System.out.print(tokens[1]+" is request to ");
 
 		switch(tokens[0].trim()){
 			case "1" : // Parking Command
 				// Check if Request Slot is match with this beacon
-				System.out.println("edok "+tokens[2]);
-				System.out.println(tokens[2].equals("1"));
 				if((Integer.parseInt(tokens[2]) == thisBeacon.getSlotNo()) && !thisBeacon.isHasCarPark()){
 					thisBeacon.setHasCarPark(true);
 					thisBeacon.setOwnBy(tokens[1]);
@@ -69,7 +66,6 @@ public class ReceiverBeacon extends Thread {
 			break;
 			case "2" : // Bye Command
 				// Check if Request Slot is match with this beacon
-				System.out.println("bye at slot "+tokens[2]);
 				if(tokens[2].equals(""+thisBeacon.getSlotNo())){
 					
 					// remove a car from this slot
