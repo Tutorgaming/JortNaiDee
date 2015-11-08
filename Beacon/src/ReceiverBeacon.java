@@ -64,7 +64,7 @@ public class ReceiverBeacon extends Thread {
 					//UPDATE HERE
 					System.out.println("park at slot "+tokens[2]+"Successful");
 					SenderBeacon ss1 = new SenderBeacon();
-					ss1.broadcastOccupancy(thisBeacon.getSlotNo(), false);
+					ss1.broadcastOccupancy(thisBeacon.getSlotNo(), true);
 				}
 			break;
 			case "2" : // Bye Command
@@ -84,7 +84,7 @@ public class ReceiverBeacon extends Thread {
 					//UPDATE HERE
 					System.out.println("bye at slot "+tokens[2]+"Successful");
 					SenderBeacon ss1 = new SenderBeacon();
-					ss1.broadcastOccupancy(thisBeacon.getSlotNo(), true);
+					ss1.broadcastOccupancy(thisBeacon.getSlotNo(), false);
 				}
 			break;
 			case "4" : // Request Map Command
