@@ -66,6 +66,12 @@ public class ReceiverBeacon extends Thread {
 					SenderBeacon ss1 = new SenderBeacon();
 					ss1.broadcastOccupancy(thisBeacon.getSlotNo(), true);
 					ss1.start();
+					try {
+						ss1.join();
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					
 					//UPDATE MAP AFTER BEING PARKED
 					SenderBeacon ss2 = new SenderBeacon();
@@ -87,9 +93,15 @@ public class ReceiverBeacon extends Thread {
 					int usedTime = thisBeacon.getParkingTime();
 					s1.packTime(usedTime);
 					s1.start();
+					try {
+						s1.join();
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					//UPDATE HERE
 					System.out.println("bye at slot "+tokens[2]+"Successful");
-					SenderBeacon ss1 = new SenderBeacon(sender);
+					SenderBeacon ss1 = new SenderBeacon();
 					ss1.broadcastOccupancy(thisBeacon.getSlotNo(), false);
 					ss1.start();
 				}
