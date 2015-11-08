@@ -7,13 +7,15 @@ import java.net.SocketException;
 public class ReceiverCar extends Thread {
 
 	private CarObject thisCarObject;
+	private CarGUI gui;
 
 	public ReceiverCar(){
 		
 	}
 	
-	public ReceiverCar(CarObject thisCarObject){
+	public ReceiverCar(CarObject thisCarObject, CarGUI gui){
 		this.thisCarObject = thisCarObject;
+		this.gui = gui;
 	}
 	
 	@Override
@@ -56,6 +58,13 @@ public class ReceiverCar extends Thread {
 		switch(tokens[0].trim()){
 			case "3": //Received Start parking timeStamp From Beacon
 				thisCarObject.addBalance(Integer.parseInt(tokens[1]));
+				gui.setBalanceLabel(thisCarObject.getBalance());
+				
+				//REQUEST MAP AFTER GET OUT FROM THE SLOT
+				SenderCar ss1 = new SenderCar();
+				ss1.sendMapRequest();
+				ss1.start();
+				
 				break;
 			case "5": //Received Map From Beacon
 				boolean map[] = new boolean[tokens[1].length()];
@@ -67,7 +76,7 @@ public class ReceiverCar extends Thread {
 					}
 				}
 				thisCarObject.setMap(map);
-				
+				gui.drawMap(map);
 				break;
 		}
 		

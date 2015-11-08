@@ -13,11 +13,8 @@ import javax.swing.JPanel;
 public class CarGUI extends JFrame {
 	private JFrame j;
 	private CarObject thisCarObject;
-	private JLabel total;
-	
-	boolean hasClickLeft=false;
-	boolean hasClickMid=false;
-	boolean hasClickRight=false;
+	private JLabel balance;
+	private JPanel slotPanels[];
 
 	public CarGUI(){
 		initGUI();
@@ -60,12 +57,12 @@ public class CarGUI extends JFrame {
 		
 		JButton mapButton = new JButton("Reload map");
 		JButton payButton = new JButton("Pay");
-		total = new JLabel("Total cash: " + 100 + "$");
+		balance = new JLabel("Total cash: " + 0 + "$");
 		Font totalFont = new Font("Tahoma",Font.BOLD,20);
-		total.setFont(totalFont);
-		total.setBackground(Color.WHITE);
+		balance.setFont(totalFont);
+		balance.setBackground(Color.WHITE);
 		
-		buttonPanel.add(total);
+		buttonPanel.add(balance);
 		buttonPanel.add(mapButton);
 		buttonPanel.add(payButton);
 		
@@ -88,7 +85,7 @@ public class CarGUI extends JFrame {
 			private CarGUI gui;
 			public void mouseClicked(java.awt.event.MouseEvent evt){
 				gui.thisCarObject.setBalance(0);
-				gui.setTotalLabel(0);
+				gui.setBalanceLabel(0);
 			}
 			private MouseAdapter init(CarGUI gui){
             	this.gui = gui;
@@ -97,10 +94,10 @@ public class CarGUI extends JFrame {
 		}.init(this));
 		
 		// for each slot in parking area
-		JPanel slotPanels[] = new JPanel[3];
+		slotPanels = new JPanel[3];
 		for(int i = 0; i < slotPanels.length; i++){
 			slotPanels[i] = new JPanel();
-			slotPanels[i].setBackground(Color.WHITE);
+			slotPanels[i].setBackground(Color.GREEN);
 			slotPanels[i].addMouseListener(new MouseAdapter() {
 				private int slotNo;
 				private CarObject thisCarObject;
@@ -139,7 +136,20 @@ public class CarGUI extends JFrame {
 		this.setVisible(true);
 		}
 	
-	private void setTotalLabel(int currentCash){
-		total.setText("Total cash: " + currentCash + "$");
+	public void setBalanceLabel(int currentCash){
+		balance.setText("Total cash: " + currentCash + "$");
 	}
+	
+	public void drawMap(boolean[] map){
+		for(int i = 0; i < slotPanels.length; i++){
+			if(map[i+1] == true){ // there's a car parking at this slot
+				System.out.println("parked");
+				slotPanels[i].setBackground(Color.RED);
+			} else { // slot is empty
+				slotPanels[i].setBackground(Color.GREEN);
+			}
+		}
+	}
+	
+	//public void 
 }
