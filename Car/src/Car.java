@@ -6,7 +6,7 @@ public class Car {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		System.out.println("Car Module Initialized !! ");
-		CarObject c1 = new CarObject("กอ159");
+		CarObject c1 = new CarObject("ABABC");
 		ReceiverCar rc1 = new ReceiverCar(c1);
 		rc1.start();
 		CarGUI gui = new CarGUI(c1);

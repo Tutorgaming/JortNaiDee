@@ -7,7 +7,7 @@ public class SenderCar extends Thread {
 	private InetAddress clientAddress;
 	private CarObject thisCarObject;
 
-	public SenderCar() throws UnknownHostException {
+	public SenderCar(){
 		this.setBroadcastAddress();
 		this.messageToSend = "";
 	}
@@ -51,7 +51,7 @@ public class SenderCar extends Thread {
 	}
 	
 	public void sendMapRequest(){
-		this.messageToSend = "5";
+		this.messageToSend = "4";
 	}
 	
 	public void setBroadcastAddress(){

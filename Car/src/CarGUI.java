@@ -74,6 +74,15 @@ public class CarGUI extends JFrame {
 		parkingPanel.setBounds(0, 100, 800, 500);
 		parkingPanel.setLayout(null);
 		
+		// map button
+		mapButton.addMouseListener(new MouseAdapter(){
+			public void mouseClicked(java.awt.event.MouseEvent evt){
+				SenderCar s = new SenderCar();
+				s.sendMapRequest();
+				s.start();
+			}
+		});
+		
 		// for each slot in parking area
 		JPanel slotPanels[] = new JPanel[3];
 		for(int i = 0; i < slotPanels.length; i++){
