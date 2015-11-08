@@ -14,6 +14,7 @@ public class CarGUI extends JFrame {
 	private JFrame j;
 	private CarObject thisCarObject;
 	private JLabel balance;
+	private JLabel statusLabel;
 	private JPanel slotPanels[];
 
 	public CarGUI(){
@@ -123,10 +124,48 @@ public class CarGUI extends JFrame {
 	        }.init(i+1, this.thisCarObject));
 			parkingPanel.add(slotPanels[i]);
 		}
-		slotPanels[0].setBounds(15,0, 250, 500);
-		slotPanels[1].setBounds(275,0, 250, 500);
-		slotPanels[2].setBounds(535,0, 250, 500);
+		slotPanels[0].setBounds(15,0, 250, 350);
+		slotPanels[1].setBounds(275,0, 250, 350);
+		slotPanels[2].setBounds(535,0, 250, 350);
 		
+		// slot panel
+		Font nameFont2 = new Font("Tahoma",Font.BOLD,30);
+		
+		JLabel slot1 = new JLabel("SLOT 1");
+		slot1.setFont(nameFont2);
+		
+		JPanel slot1Panel = new JPanel();
+		slot1Panel.setBackground(Color.WHITE);
+		slot1Panel.setBounds(15, 450, 250, 50);
+		slot1Panel.add(slot1);
+		this.add(slot1Panel);
+		
+		JLabel slot2 = new JLabel("SLOT 2");
+		slot2.setFont(nameFont2);
+		
+		JPanel slot2Panel = new JPanel();
+		slot2Panel.setBackground(Color.WHITE);
+		slot2Panel.setBounds(275, 450, 250, 50);
+		slot2Panel.add(slot2);
+		this.add(slot2Panel);
+		
+		JLabel slot3 = new JLabel("SLOT 3");
+		slot3.setFont(nameFont2);
+		
+		JPanel slot3Panel = new JPanel();
+		slot3Panel.setBackground(Color.WHITE);
+		slot3Panel.setBounds(535, 450, 250, 50);
+		slot3Panel.add(slot3);
+		this.add(slot3Panel);
+		
+		JPanel statusPanel = new JPanel();
+		statusPanel.setBackground(Color.WHITE);
+		statusPanel.setBounds(15, 515, 770, 50);
+		this.add(statusPanel);
+		
+		statusLabel = new JLabel("You're not parking.");
+		statusLabel.setFont(nameFont);
+		statusPanel.add(statusLabel);
 		
 		namePanel.add(name);
 		topPanel.add(namePanel);
@@ -148,6 +187,14 @@ public class CarGUI extends JFrame {
 			} else { // slot is empty
 				slotPanels[i].setBackground(Color.GREEN);
 			}
+		}
+	}
+	
+	public void updateStatus(int currentSlot){
+		if(currentSlot == 0){
+			statusLabel.setText("You're not parking");
+		} else {
+			statusLabel.setText("You're parking at slot " + currentSlot);
 		}
 	}
 	

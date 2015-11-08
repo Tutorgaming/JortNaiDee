@@ -77,6 +77,7 @@ public class ReceiverCar extends Thread {
 				}
 				thisCarObject.setMap(map);
 				gui.drawMap(map);
+				gui.updateStatus(thisCarObject.getCurrentParkingSlot());
 				break;
 		}
 		
