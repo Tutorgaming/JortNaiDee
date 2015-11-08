@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 public class CarGUI extends JFrame {
 	private JFrame j;
 	private CarObject thisCarObject;
+	private JLabel total;
 	
 	boolean hasClickLeft=false;
 	boolean hasClickMid=false;
@@ -59,8 +60,7 @@ public class CarGUI extends JFrame {
 		
 		JButton mapButton = new JButton("Reload map");
 		JButton payButton = new JButton("Pay");
-		int totalPay = 0;
-		JLabel total = new JLabel("Total cash: "+totalPay+"$");
+		total = new JLabel("Total cash: " + 100 + "$");
 		Font totalFont = new Font("Tahoma",Font.BOLD,20);
 		total.setFont(totalFont);
 		total.setBackground(Color.WHITE);
@@ -82,6 +82,19 @@ public class CarGUI extends JFrame {
 				s.start();
 			}
 		});
+		
+		// pay button
+		payButton.addMouseListener(new MouseAdapter(){
+			private CarGUI gui;
+			public void mouseClicked(java.awt.event.MouseEvent evt){
+				gui.thisCarObject.setBalance(0);
+				gui.setTotalLabel(0);
+			}
+			private MouseAdapter init(CarGUI gui){
+            	this.gui = gui;
+            	return this;
+            }
+		}.init(this));
 		
 		// for each slot in parking area
 		JPanel slotPanels[] = new JPanel[3];
@@ -125,4 +138,8 @@ public class CarGUI extends JFrame {
 		this.add(parkingPanel);
 		this.setVisible(true);
 		}
+	
+	private void setTotalLabel(int currentCash){
+		total.setText("Total cash: " + currentCash + "$");
+	}
 }
