@@ -10,12 +10,14 @@ public class CarObject {
 		this.setCarPlate("");
 		this.setBalance(0);
 		this.setCurrentParkingSlot(0);
+		map = new boolean[4];
 	}
 	
 	public CarObject(String carPlate){
 		this.setCarPlate(carPlate);
 		this.setBalance(0);
 		this.setCurrentParkingSlot(0);
+		map = new boolean[4];
 	}
 	
 	public void clearBalance(){
@@ -40,6 +42,10 @@ public class CarObject {
 
 	public void setMap(boolean[] map) {
 		this.map = map;
+	}
+	
+	public void setMapAt(int index, boolean value){
+		this.map[index] = value;
 	}
 
 	public int getBalance() {

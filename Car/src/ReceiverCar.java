@@ -79,6 +79,15 @@ public class ReceiverCar extends Thread {
 				gui.drawMap(map);
 				gui.updateStatus(thisCarObject.getCurrentParkingSlot());
 				break;
+				
+			case "6":
+				if(tokens[2].equals("1")){ //IF Reported Slot 1 is Occupied
+					thisCarObject.setMapAt(Integer.parseInt(tokens[1]), true);
+				}else{
+					thisCarObject.setMapAt(Integer.parseInt(tokens[1]), false);
+				}
+				gui.drawMap(thisCarObject.getMap());
+				break;
 		}
 		
 	}
